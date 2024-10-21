@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+
+<body>
+    <h1>AES and DES Encryption Example</h1>
+    <div>
+        <h2>AES Encryption</h2>
+        <input type="text" id="aes-input" placeholder="Enter text for AES">
+        <button onclick="encryptAES()">Encrypt AES</button>
+        <p id="aes-output"></p>
+    </div>
+    <div>
+        <h2>DES Encryption</h2>
+        <input type="text" id="des-input" placeholder="Enter text for DES">
+        <button onclick="encryptDES()">Encrypt DES</button>
+        <p id="des-output"></p>
+    </div>
+
+    <script>
+        // AES Encryption
+        function encryptAES() {
+            const plaintext = document.getElementById('aes-input').value;
+            const key = CryptoJS.enc.Utf8.parse('1234567890123456'); // 16 bytes key for AES-128
+            const iv = CryptoJS.enc.Utf8.parse('1234567890123456');  // 16 bytes IV
+
+            const encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            document.getElementById('aes-output').innerText = encrypted.toString();
+        }
+
+        // DES Encryption
+        function encryptDES() {
+            const plaintext = document.getElementById('des-input').value;
+            const key = CryptoJS.enc.Utf8.parse('12345678'); // 8 bytes key for DES
+            const iv = CryptoJS.enc.Utf8.parse('12345678');  // 8 bytes IV
+
+            const encrypted = CryptoJS.DES.encrypt(plaintext, key, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            document.getElementById('des-output').innerText = encrypted.toString();
+        }
+    </script>
+</body>
+
+</html>
